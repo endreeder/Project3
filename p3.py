@@ -1,5 +1,7 @@
 from urllib.request import urlretrieve
 import re
+from collections import Counter
+from collections import OrderedDict
 url = 'https://s3.amazonaws.com/tcmg476/http_access_log'
 lf = 'local.log'
 
@@ -21,12 +23,10 @@ for line in open('local.log'):
                         things[filename] += 1
                 else:
                         things[filename] = 1
-print(things)
 
 
+sorted2= sorted(things, key=things.get, reverse=True)
 
+print('Here are the files that were requested in order of most frequently to least frequently')
 
-  
-  # NOTE MOVE THIS TO THE BOTTOM
-print('Question 1: How many total requests were made in the time period represented in the log?')
-
+print(sorted2)

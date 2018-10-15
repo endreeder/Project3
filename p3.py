@@ -5,19 +5,29 @@ url = 'https://s3.amazonaws.com/tcmg476/http_access_log'
 lf = 'local.log'
 
 local_file, headers = urlretrieve(url, lf)
-fh = open('local.log')
 
-for line in fh:
-  print(line)
+regex = re.compile(".*\[([^:]*):(.*) \-[0-9]{4}\] \"([A-Z]+) (.+?)( HTTP.*\"|\") ([2-5]0[0-9]) .*")
 
 
 
-
-# NOTE MOVE THIS TO THE BOTTOM
-print('Question 1: How many total requests were made in the time period represented in the log?')
 count=0
-for line in fh:
+for line in open('local.log'):
   count+=1
   
-  
 print(count)
+things = {}
+
+for line in open('local.org'):
+  pieces = re.split(".*\[([^:]*):(.*) \-[0-9]{4}\] \"([A-Z]+) (.+?)( HTTP.*\"|\") ([2-5]0[0-9]) .*", line)
+  filename = pieces[3]
+  if filename in things:
+    things[filename] += 1
+  else:
+    things[filename] = 1
+    
+    
+print(things)
+  
+  # NOTE MOVE THIS TO THE BOTTOM
+print('Question 1: How many total requests were made in the time period represented in the log?')
+
